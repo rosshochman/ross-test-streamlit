@@ -20,12 +20,15 @@ def main():
     # Generate sample DataFrames
     dataframes = generate_dataframes()
 
+    # Calculate the maximum width of any DataFrame
+    max_width = max(df.shape[1] * 100 for df in dataframes.values())
+
     # Display DataFrames in columns
-    columns = st.columns(5)  # 15 columns
+    columns = st.columns(15)  # 15 columns
     for i, (name, df) in enumerate(dataframes.items()):
-        with columns[i]:
+        with columns[i % 15]:
             st.header(name)
-            st.dataframe(df)
+            st.dataframe(df, width=max_width)
 
 # Run the main function
 if __name__ == "__main__":
