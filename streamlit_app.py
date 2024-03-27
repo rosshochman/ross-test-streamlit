@@ -4,7 +4,7 @@ import pandas as pd
 # Define function to generate sample DataFrames
 def generate_dataframes():
     dataframes = {}
-    for i in range(1, 21):
+    for i in range(1, 11):
         df = pd.DataFrame({
             'Column 1': [f'Data {i}-1', f'Data {i}-2', f'Data {i}-3'],
             'Column 2': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C']
