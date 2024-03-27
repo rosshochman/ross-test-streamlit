@@ -20,10 +20,13 @@ def main():
     dataframes = generate_dataframes()
 
     # Display DataFrames in columns
-    columns = st.columns(20)  # Change the number of columns as needed
+    columns = st.columns(15)  # Change the number of columns to 15
     for i, (name, df) in enumerate(dataframes.items()):
-        columns[i % 20].header(name)
-        columns[i % 20].dataframe(df)
+        with columns[i % 15]:
+            st.markdown(f'<div style="width: 100%; padding: 10px; border: 1px solid #ccc;">', unsafe_allow_html=True)
+            st.header(name)
+            st.dataframe(df)
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # Run the main function
 if __name__ == "__main__":
