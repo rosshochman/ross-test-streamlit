@@ -20,7 +20,7 @@ def main():
     dataframes = generate_dataframes()
 
     # Display DataFrames in columns
-    columns = st.columns(3)  # Change the number of columns as needed
+    columns = st.columns(10)  # Change the number of columns as needed
     for i, (name, df) in enumerate(dataframes.items()):
         columns[i % 3].header(name)
         columns[i % 3].dataframe(df)
