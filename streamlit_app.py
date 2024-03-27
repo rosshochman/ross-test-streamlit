@@ -1,8 +1,3 @@
-
-To display DataFrames side by side, filling as many columns as will fit on the screen, you can use Streamlit's beta_columns layout feature dynamically. Here's how you can modify the code:
-
-python
-Copy code
 import streamlit as st
 import pandas as pd
 
