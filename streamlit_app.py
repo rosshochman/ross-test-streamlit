@@ -12,6 +12,11 @@ def generate_dataframes():
         dataframes[f'DataFrame {i}'] = df
     return dataframes
 
+# Calculate the number of columns based on the screen width
+def calculate_num_columns(column_width=300):
+    max_width = st._get_report_ctx().width - 30  # Subtracting padding
+    return max(1, int(max_width / column_width))
+
 # Main function to display the Streamlit app
 def main():
     st.title("Multi-DataFrame Streamlit App")
@@ -19,15 +24,16 @@ def main():
     # Generate sample DataFrames
     dataframes = generate_dataframes()
 
-    # Calculate the number of columns that will fit on the screen
-    num_columns = st.beta_columns(20)
+    # Calculate the number of columns
+    num_columns = calculate_num_columns()
 
     # Display DataFrames side by side
     col_index = 0
     for name, df in dataframes.items():
-        with num_columns[col_index % len(num_columns)]:
-            st.header(name)
-            st.dataframe(df)
+        if col_index % num_columns == 0:
+            st.write('')
+        st.header(name)
+        st.dataframe(df)
         col_index += 1
 
 # Run the main function
