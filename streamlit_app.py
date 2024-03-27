@@ -4,19 +4,13 @@ import pandas as pd
 # Define function to generate sample DataFrames
 def generate_dataframes():
     dataframes = {}
-    for i in range(1, 11):
+    for i in range(1, 21):
         df = pd.DataFrame({
             'Column 1': [f'Data {i}-1', f'Data {i}-2', f'Data {i}-3'],
             'Column 2': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C']
         })
         dataframes[f'DataFrame {i}'] = df
     return dataframes
-
-# Calculate the number of columns based on the screen width
-def calculate_num_columns(column_width=300):
-    empty_space = st.empty()
-    max_width = empty_space._get_delta().width - 30  # Subtracting padding
-    return max(1, int(max_width / column_width))
 
 # Main function to display the Streamlit app
 def main():
@@ -25,17 +19,17 @@ def main():
     # Generate sample DataFrames
     dataframes = generate_dataframes()
 
-    # Calculate the number of columns
-    num_columns = calculate_num_columns()
+    # Calculate the number of columns based on the screen width
+    max_columns = st.beta_columns(20)
+    num_columns = len(max_columns)
 
     # Display DataFrames side by side
-    col_index = 0
-    for name, df in dataframes.items():
-        if col_index % num_columns == 0:
-            st.write('')
-        st.header(name)
-        st.dataframe(df)
-        col_index += 1
+    for i, (name, df) in enumerate(dataframes.items()):
+        if i % num_columns == 0:
+            columns = st.beta_columns(num_columns)
+        with columns[i % num_columns]:
+            st.header(name)
+            st.dataframe(df)
 
 # Run the main function
 if __name__ == "__main__":
