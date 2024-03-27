@@ -24,10 +24,10 @@ def main():
     columns = st.columns(15)  # Change the number of columns to 15
     for i, (name, df) in enumerate(dataframes.items()):
         with columns[i % 15]:
-            st.write('<div style="width: auto; padding: 10px; border: 1px solid #ccc; overflow-x: auto;">', unsafe_allow_html=True)
+            st.write(f'<div style="padding: 10px; border: 1px solid #ccc;">', unsafe_allow_html=True)
             st.header(name)
-            st.dataframe(df)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.dataframe(df, width=800)
+            st.write('</div>', unsafe_allow_html=True)
 
 # Run the main function
 if __name__ == "__main__":
