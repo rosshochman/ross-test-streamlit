@@ -19,11 +19,23 @@ def main():
     # Generate sample DataFrames
     dataframes = generate_dataframes()
 
+    # CSS to override Streamlit's default layout
+    st.markdown("""
+    <style>
+    .stApp {
+        max-width: 100%;
+    }
+    .stApp > div:first-child {
+        width: 100%;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     # Display DataFrames in columns
     columns = st.columns(15)  # Change the number of columns to 15
     for i, (name, df) in enumerate(dataframes.items()):
         with columns[i % 15]:
-            st.markdown(f'<div style="width: 100%; padding: 10px; border: 1px solid #ccc;">', unsafe_allow_html=True)
+            st.markdown(f'<div style="padding: 10px; border: 1px solid #ccc;">', unsafe_allow_html=True)
             st.header(name)
             st.dataframe(df)
             st.markdown('</div>', unsafe_allow_html=True)
