@@ -19,17 +19,11 @@ def main():
     # Generate sample DataFrames
     dataframes = generate_dataframes()
 
-    # Calculate the number of columns based on the screen width
-    max_columns = st.beta_columns(20)
-    num_columns = len(max_columns)
-
-    # Display DataFrames side by side
+    # Display DataFrames in columns
+    columns = st.columns(3)  # Change the number of columns as needed
     for i, (name, df) in enumerate(dataframes.items()):
-        if i % num_columns == 0:
-            columns = st.beta_columns(num_columns)
-        with columns[i % num_columns]:
-            st.header(name)
-            st.dataframe(df)
+        columns[i % 3].header(name)
+        columns[i % 3].dataframe(df)
 
 # Run the main function
 if __name__ == "__main__":
