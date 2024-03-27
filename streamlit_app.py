@@ -14,7 +14,8 @@ def generate_dataframes():
 
 # Calculate the number of columns based on the screen width
 def calculate_num_columns(column_width=300):
-    max_width = st._get_report_ctx().width - 30  # Subtracting padding
+    empty_space = st.empty()
+    max_width = empty_space._get_delta().width - 30  # Subtracting padding
     return max(1, int(max_width / column_width))
 
 # Main function to display the Streamlit app
