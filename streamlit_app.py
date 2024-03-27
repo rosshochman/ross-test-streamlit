@@ -1,8 +1,12 @@
+
+To display DataFrames side by side, filling as many columns as will fit on the screen, you can use Streamlit's beta_columns layout feature dynamically. Here's how you can modify the code:
+
+python
+Copy code
 import streamlit as st
 import pandas as pd
 
-st.write('Welcome to Streamlit')
-
+# Define function to generate sample DataFrames
 def generate_dataframes():
     dataframes = {}
     for i in range(1, 21):
@@ -13,13 +17,24 @@ def generate_dataframes():
         dataframes[f'DataFrame {i}'] = df
     return dataframes
 
-# Function to display DataFrame section
-def display_dataframe_section(dataframes):
-    for name, df in dataframes.items():
-        st.header(name)
-        st.write(df)
-# Generate sample DataFrames
-dataframes = generate_dataframes()
+# Main function to display the Streamlit app
+def main():
+    st.title("Multi-DataFrame Streamlit App")
 
-# Display DataFrame sections
-display_dataframe_section(dataframes)
+    # Generate sample DataFrames
+    dataframes = generate_dataframes()
+
+    # Calculate the number of columns that will fit on the screen
+    num_columns = st.beta_columns(20)
+
+    # Display DataFrames side by side
+    col_index = 0
+    for name, df in dataframes.items():
+        with num_columns[col_index % len(num_columns)]:
+            st.header(name)
+            st.dataframe(df)
+        col_index += 1
+
+# Run the main function
+if __name__ == "__main__":
+    main()
