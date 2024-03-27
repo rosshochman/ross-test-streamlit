@@ -21,7 +21,7 @@ def main():
     dataframes = generate_dataframes()
 
     # Display DataFrames in columns
-    columns = st.columns(15)  # 15 columns
+    columns = st.columns(5)  # 15 columns
     for i, (name, df) in enumerate(dataframes.items()):
         with columns[i]:
             st.header(name)
