@@ -12,6 +12,11 @@ def generate_dataframes():
         dataframes[f'DataFrame {i}'] = df
     return dataframes
 
+# Calculate the number of columns based on the screen width
+def calculate_num_columns(column_width=300):
+    max_width = st._get_report_ctx().width - 30  # Subtracting padding
+    return max(1, int(max_width / column_width))
+
 # Main function to display the Streamlit app
 def main():
     st.set_page_config(layout="wide")  # Set page layout to wide
@@ -20,14 +25,16 @@ def main():
     # Generate sample DataFrames
     dataframes = generate_dataframes()
 
+    # Calculate the number of columns
+    num_columns = calculate_num_columns()
+
     # Display DataFrames in columns
-    columns = st.columns(15)  # Change the number of columns to 15
     for i, (name, df) in enumerate(dataframes.items()):
-        with columns[i % 15]:
-            st.write(f'<div style="padding: 10px; border: 1px solid #ccc;">', unsafe_allow_html=True)
+        if i % num_columns == 0:
+            columns = st.beta_columns(num_columns)
+        with columns[i % num_columns]:
             st.header(name)
-            st.dataframe(df, width=800)
-            st.write('</div>', unsafe_allow_html=True)
+            st.dataframe(df, width=300)
 
 # Run the main function
 if __name__ == "__main__":
