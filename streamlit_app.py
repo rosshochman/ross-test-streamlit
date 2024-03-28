@@ -17,9 +17,6 @@ def fetch_data():
         ticker = i["ticker"]
         percentage_str = i["todaysChangePerc"]
         percentage_float = float(percentage_str)
-        formatted_percentage_str = '{:.2f}%'.format(percentage_float)
-        if percentage_float > 0:
-            formatted_percentage_str = "+"+formatted_percentage_str
         change_str = i["todaysChange"]
         change_float = float(change_str)
         dayDic = i["day"]
@@ -31,29 +28,30 @@ def fetch_data():
         dayPrice = daylastTrade["p"]
         dayPriceFloat = float(dayPrice)
         dollarValue = dayPriceFloat*dayVWfloat
-        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dollarValue]
+        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue]
         master_list.append(new_list)
-    columns = ["Ticker","Price","VWAP","% Change","$ Change","$ Volume"]
+    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume"]
     df = pd.DataFrame(master_list, columns=columns)
     df_sorted = df.sort_values(by="% Change", ascending=False).head(100)
     return df_sorted
 
 def main():
-
+    df1 = pd.DataFrame()
 
     # Infinite loop to continuously update data
     while True:
         try:
             # Fetch data from Polygon.io API
-            df1 = fetch_data()
+            new_df1 = fetch_data()
 
             # Display data frames
             st.header('Stocks')
-            st.dataframe(df1)
+            st.dataframe(new_df1)
 
+            df1 = new_df1
 
             # Sleep for 1 second before making the next API call
-            time.sleep(60)
+            time.sleep(10)
 
         except Exception as e:
             continue
