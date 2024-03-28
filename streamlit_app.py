@@ -38,7 +38,7 @@ def fetch_data():
 
 def main():
     df1 = st.empty()
-    st.header('Stocks')
+    
 
     # Infinite loop to continuously update data
     while True:
@@ -47,11 +47,11 @@ def main():
             new_df1 = fetch_data()
 
             # Display data frames
-            
+            st.header('Stocks')
             df1.dataframe(new_df1)
 
             # Sleep for 1 second before making the next API call
-            time.sleep(5)
+            time.sleep(.1)
 
         except Exception as e:
             continue
