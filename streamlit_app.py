@@ -5,8 +5,9 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
-def bold_text_for_column(data, column_name):
-    return ['font-weight: bold' if col == column_name else '' for col in data.index]
+# Define a function to apply CSS to DataFrame
+def bold_text_for_column(val, column_name):
+    return f'font-weight: bold' if val.name == column_name else ''
 
 
 def fetch_data():
@@ -58,7 +59,8 @@ def main():
             new_df1 = fetch_data()
 
             # Display data frames
-            styled_df1 = new_df1.style.apply(bold_text_for_column, column_name='Ticker')
+            styled_df1 = new_df1.style.applymap(lambda x: bold_text_for_column(x, 'Ticker'))
+
 
             df1.dataframe(styled_df1, hide_index=True)
 
