@@ -1,47 +1,64 @@
 import streamlit as st
 import pandas as pd
-import random
-import string
+import requests
 import time
 
 
-st.set_page_config(layout="wide")
+def fetch_data():
+    master_list = []
+    url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey=DT909L2IQJNAOmTWBgpPsNHo6m8AWuD4"
+    #add something to get lists of otc vs listed
+    response = requests.get(url)
+    data = response.json()
+    tickers_list = data["tickers"]
+    for i in tickers_list:
+        ticker = i["ticker"]
+        percentage_str = i["todaysChangePerc"]
+        percentage_float = float(percentage_str)
+        formatted_percentage_str = '{:.2f}%'.format(percentage_float)
+        if percentage_float > 0:
+            formatted_percentage_str = "+"+formatted_percentage_str
+        change_str = i["todaysChange"]
+        change_float = float(change_str)
+        if change_float > 0:
+            change_str = "+"+change_str
+        dayDic = i["day"]
+        dayV = dayDic["v"]
+        dayVint = int(dayV)
+        dayVW = dayDic["vw"]
+        dayVWfloat = float(dayVW)
+        daylastTrade = i["lastTrade"]
+        dayPrice = daylastTrade["p"]
+        dayPriceFloat = float(dayPrice)
+        dollarValue = dayPriceFloat*dayVWfloat
+        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dollarValue]
+        master_list.append(new_list)
+    columns = ["Ticker","Price","VWAP","% Change","$ Change","$ Volume"]
+    df = pd.DataFrame(master_list, columns=columns)
+    df_sorted = df.sort_values(by="% Change", ascending=False)
+    return df_sorted
 
-# Function to generate a random string
-def random_string(length=5):
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for _ in range(length))
-
-# Define function to generate sample DataFrames with random strings
-def generate_dataframes():
-    dataframes = {}
-    counter = 1
-    while counter <= 4:
-        df = pd.DataFrame({
-            f'Column {i}': [random_string() for _ in range(25)] for i in range(1, 5)
-        })
-        dataframes[f'DataFrame {counter}'] = df
-        counter += 1
-    return dataframes
-
-# Main function to display the Streamlit app
 def main():
+    st.title("Penny Stock Data Science")
+    st.set_page_config(layout="wide")
+
+    # Infinite loop to continuously update data
+    while True:
+        try:
+            # Fetch data from Polygon.io API
+            df1 = fetch_data()
+
+            # Display data frames
+            st.header('Stocks')
+            st.dataframe(df1)
 
 
-    # Generate sample DataFrames with random strings
-    dataframes = generate_dataframes()
+            # Sleep for 1 second before making the next API call
+            time.sleep(.1)
 
-    # Calculate the maximum width of any DataFrame
-    max_width = max(df.shape[1] * 100 for df in dataframes.values())
+        except Exception as e:
+            continue
 
-    # Display DataFrames in columns
-    columns = st.columns(4)  # 15 columns
-    for i, (name, df) in enumerate(dataframes.items()):
-        with columns[i % 4]:
-            st.header(name)
-            st.dataframe(df, width=max_width)
-
-# Run the main function continuously
-
-main()
-time.sleep(1)  # Add a delay (in seconds) to control the frequency of execution
+# Run the Streamlit app
+if __name__ == '__main__':
+    main()
