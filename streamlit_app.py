@@ -16,7 +16,7 @@ def generate_dataframes():
 # Main function to display the Streamlit app
 def main():
     st.set_page_config(layout="wide")  # Set page layout to wide
-    st.title("Multi-DataFrame Streamlit App")
+    #st.title("Multi-DataFrame Streamlit App")
 
     # Generate sample DataFrames
     dataframes = generate_dataframes()
