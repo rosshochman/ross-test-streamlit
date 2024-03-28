@@ -42,6 +42,6 @@ def main():
             st.dataframe(df, width=max_width)
 
 # Run the main function continuously
-while True:
-    main()
-    time.sleep(1)  # Add a delay (in seconds) to control the frequency of execution
+
+main()
+time.sleep(1)  # Add a delay (in seconds) to control the frequency of execution
