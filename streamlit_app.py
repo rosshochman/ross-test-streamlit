@@ -42,7 +42,6 @@ def fetch_data():
     df_sorted['Price'] = df_sorted['Price'].round(2)
     df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
     df_sorted["% Change"] = df_sorted["% Change"].apply(format_percentage)
-    df_sorted.reset_index(drop=True, inplace=True)
 
     return df_sorted
 
