@@ -16,9 +16,9 @@ def random_string(length=5):
 def generate_dataframes():
     dataframes = {}
     counter = 1
-    while counter <= 5:
+    while counter <= 4:
         df = pd.DataFrame({
-            f'Column {i}': [random_string() for _ in range(25)] for i in range(1, 6)
+            f'Column {i}': [random_string() for _ in range(25)] for i in range(1, 5)
         })
         dataframes[f'DataFrame {counter}'] = df
         counter += 1
@@ -35,9 +35,9 @@ def main():
     max_width = max(df.shape[1] * 100 for df in dataframes.values())
 
     # Display DataFrames in columns
-    columns = st.columns(5)  # 15 columns
+    columns = st.columns(4)  # 15 columns
     for i, (name, df) in enumerate(dataframes.items()):
-        with columns[i % 5]:
+        with columns[i % 4]:
             st.header(name)
             st.dataframe(df, width=max_width)
 
