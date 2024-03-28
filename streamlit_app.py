@@ -4,6 +4,9 @@ import random
 import string
 import time
 
+
+st.set_page_config(layout="wide")
+
 # Function to generate a random string
 def random_string(length=5):
     letters = string.ascii_lowercase
@@ -23,7 +26,7 @@ def generate_dataframes():
 
 # Main function to display the Streamlit app
 def main():
-    st.set_page_config(layout="wide")  # Set page layout to wide
+
 
     # Generate sample DataFrames with random strings
     dataframes = generate_dataframes()
