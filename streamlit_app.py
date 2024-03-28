@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import requests
 import time
-
-st.title("Penny Stock Data Science")
 st.set_page_config(layout="wide")
+st.title("Penny Stock Data Science")
+
 
 def fetch_data():
     master_list = []
