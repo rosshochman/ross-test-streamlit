@@ -37,11 +37,11 @@ def fetch_data():
         new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,dayVint,dollarValue,epoch_time]
         master_list.append(new_list)
     columns = ["Ticker","Price","VWAP","% Change","Volume","$ Volume","Time"]
-    df = pd.DataFrame(master_list, columns=columns)
+    df = pd.DataFrame(master_list, columns=columns, index=False)
     df_sorted = df[df['Price'] > 1].sort_values(by="% Change", ascending=False).head(100)
-    df['Price'] = df['Price'].round(2)
-    df['VWAP'] = df['VWAP'].round(2)
-    df["% Change"] = df["% Change"].apply(format_percentage)
+    df_sorted['Price'] = df_sorted['Price'].round(2)
+    df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
+    df_sorted["% Change"] = df_sorted["% Change"].apply(format_percentage)
     return df_sorted
 
 def main():
