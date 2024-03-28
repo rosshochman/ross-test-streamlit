@@ -5,9 +5,6 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
-# Define a function to apply CSS to DataFrame
-def bold_text_for_column(val, column_name):
-    return f'font-weight: bold' if val.name == column_name else ''
 
 
 def fetch_data():
@@ -58,11 +55,8 @@ def main():
             # Fetch data from Polygon.io API
             new_df1 = fetch_data()
 
-            # Display data frames
-            styled_df1 = new_df1.style.applymap(lambda x: bold_text_for_column(x, 'Ticker'))
 
-
-            df1.dataframe(styled_df1, hide_index=True)
+            df1.dataframe(new_df1, hide_index=True)
 
             # Sleep for 1 second before making the next API call
             time.sleep(.1)
