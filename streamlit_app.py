@@ -1,38 +1,31 @@
 import streamlit as st
 import pandas as pd
+import random
+import string
+import time
 
-# Define function to generate sample DataFrames
+# Function to generate a random string
+def random_string(length=5):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for _ in range(length))
+
+# Define function to generate sample DataFrames with random strings
 def generate_dataframes():
     dataframes = {}
-    for i in range(1, 6):  # 15 columns
+    counter = 1
+    while counter <= 5:
         df = pd.DataFrame({
-            'Column 1': [f'Data {i}-1', f'Data {i}-2', f'Data {i}-3'],
-            'Column 2': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 3': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 4': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 5': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 6': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 7': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 8': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 9': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 11': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 12': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 13': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 14': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 15': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 16': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 17': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
-            'Column 18': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C']
+            f'Column {i}': [random_string() for _ in range(25)] for i in range(1, 6)
         })
-        dataframes[f'DataFrame {i}'] = df
+        dataframes[f'DataFrame {counter}'] = df
+        counter += 1
     return dataframes
 
 # Main function to display the Streamlit app
 def main():
     st.set_page_config(layout="wide")  # Set page layout to wide
-    #st.title("Multi-DataFrame Streamlit App")
 
-    # Generate sample DataFrames
+    # Generate sample DataFrames with random strings
     dataframes = generate_dataframes()
 
     # Calculate the maximum width of any DataFrame
@@ -45,6 +38,7 @@ def main():
             st.header(name)
             st.dataframe(df, width=max_width)
 
-# Run the main function
-if __name__ == "__main__":
+# Run the main function continuously
+while True:
     main()
+    time.sleep(1)  # Add a delay (in seconds) to control the frequency of execution
