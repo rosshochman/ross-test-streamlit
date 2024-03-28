@@ -28,11 +28,12 @@ def fetch_data():
         dayPrice = daylastTrade["p"]
         dayPriceFloat = float(dayPrice)
         dollarValue = dayPriceFloat*dayVWfloat
-        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue]
+        epoch_time = int(time.time())
+        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue,epoch_time]
         master_list.append(new_list)
-    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume"]
+    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume","Time"]
     df = pd.DataFrame(master_list, columns=columns)
-    df_sorted = df.sort_values(by="% Change", ascending=False).head(100)
+    df_sorted = df[df['Price'] > 1].sort_values(by="% Change", ascending=False).head(100)
     return df_sorted
 
 def main():
