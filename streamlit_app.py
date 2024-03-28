@@ -22,8 +22,6 @@ def fetch_data():
             formatted_percentage_str = "+"+formatted_percentage_str
         change_str = i["todaysChange"]
         change_float = float(change_str)
-        if change_float > 0:
-            change_str = "+"+change_str
         dayDic = i["day"]
         dayV = dayDic["v"]
         dayVint = int(dayV)
