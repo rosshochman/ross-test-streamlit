@@ -5,6 +5,11 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
+def format_percentage(value):
+    if value >= 0:
+        return '+{:.2%}'.format(value)
+    else:
+        return '{:.2%}'.format(value)
 
 def fetch_data():
     master_list = []
@@ -27,13 +32,16 @@ def fetch_data():
         daylastTrade = i["lastTrade"]
         dayPrice = daylastTrade["p"]
         dayPriceFloat = float(dayPrice)
-        dollarValue = dayPriceFloat*dayVWfloat
+        dollarValue = dayVint*dayVWfloat
         epoch_time = int(time.time())
-        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue,epoch_time]
+        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,dayVint,dollarValue,epoch_time]
         master_list.append(new_list)
-    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume","Time"]
+    columns = ["Ticker","Price","VWAP","% Change","Volume","$ Volume","Time"]
     df = pd.DataFrame(master_list, columns=columns)
     df_sorted = df[df['Price'] > 1].sort_values(by="% Change", ascending=False).head(100)
+    df['Price'] = df['Price'].round(2)
+    df['VWAP'] = df['VWAP'].round(2)
+    df["% Change"] = df["% Change"].apply(format_percentage)
     return df_sorted
 
 def main():
