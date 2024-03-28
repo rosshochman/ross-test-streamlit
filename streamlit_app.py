@@ -42,6 +42,8 @@ def fetch_data():
     df_sorted['Price'] = df_sorted['Price'].round(2)
     df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
     df_sorted["% Change"] = df_sorted["% Change"].apply(format_percentage)
+    df_sorted.reset_index(drop=True, inplace=True)
+
     return df_sorted
 
 def main():
@@ -58,7 +60,7 @@ def main():
 
             # Display data frames
             
-            df1.dataframe(new_df1, index=False)
+            df1.dataframe(new_df1)
 
             # Sleep for 1 second before making the next API call
             time.sleep(.1)
