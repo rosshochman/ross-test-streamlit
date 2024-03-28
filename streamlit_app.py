@@ -3,6 +3,8 @@ import pandas as pd
 import requests
 import time
 
+st.title("Penny Stock Data Science")
+st.set_page_config(layout="wide")
 
 def fetch_data():
     master_list = []
@@ -39,8 +41,7 @@ def fetch_data():
     return df_sorted
 
 def main():
-    st.title("Penny Stock Data Science")
-    st.set_page_config(layout="wide")
+
 
     # Infinite loop to continuously update data
     while True:
