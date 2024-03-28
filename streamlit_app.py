@@ -5,6 +5,10 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
+def bold_text_for_column(data, column_name):
+    return ['font-weight: bold' if col == column_name else '' for col in data.index]
+
+
 def fetch_data():
     master_list = []
     url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey=DT909L2IQJNAOmTWBgpPsNHo6m8AWuD4"
@@ -54,8 +58,9 @@ def main():
             new_df1 = fetch_data()
 
             # Display data frames
-            
-            df1.dataframe(new_df1, hide_index=True)
+            styled_df1 = new_df1.style.apply(bold_text_for_column, column_name='Ticker')
+
+            df1.dataframe(styled_df1, hide_index=True)
 
             # Sleep for 1 second before making the next API call
             time.sleep(.1)
