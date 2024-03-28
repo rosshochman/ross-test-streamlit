@@ -5,7 +5,7 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
-@st.cache(ttl=10)  # Cache data for 10 seconds
+@st.cache(ttl=.1)  # Cache data for 10 seconds
 def fetch_data():
     master_list = []
     url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey=DT909L2IQJNAOmTWBgpPsNHo6m8AWuD4"
