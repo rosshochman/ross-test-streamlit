@@ -5,7 +5,7 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
-@st.cache(ttl=1)  # Cache data for .1 seconds
+
 def fetch_data():
     master_list = []
     url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey=DT909L2IQJNAOmTWBgpPsNHo6m8AWuD4"
@@ -28,31 +28,32 @@ def fetch_data():
         dayPrice = daylastTrade["p"]
         dayPriceFloat = float(dayPrice)
         dollarValue = dayPriceFloat*dayVWfloat
-        epoch_time = int(time.time())
-        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue,epoch_time]
+        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue]
         master_list.append(new_list)
-    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume","Time"]
+    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume"]
     df = pd.DataFrame(master_list, columns=columns)
-    df_sorted = df[df['Price'] > 1].sort_values(by="% Change", ascending=False).head(100)
+    df_sorted = df.sort_values(by="% Change", ascending=False).head(100)
     return df_sorted
 
 def main():
+    df1 = st.empty()
+    st.header('Stocks')
 
+    # Infinite loop to continuously update data
+    while True:
+        try:
+            # Fetch data from Polygon.io API
+            new_df1 = fetch_data()
 
-# Infinite loop to continuously update data
-    try:
-        # Fetch data from Polygon.io API
-        new_df1 = fetch_data()
+            # Display data frames
+            
+            df1.dataframe(new_df1)
 
-        # Display data frames
-        st.header('Stocks')
-        st.dataframe(new_df1)
+            # Sleep for 1 second before making the next API call
+            time.sleep(5)
 
-        # Sleep for 1 second before making the next API call
-        time.sleep(10)
-
-    except Exception as e:
-        pass
+        except Exception as e:
+            continue
 
 # Run the Streamlit app
 if __name__ == '__main__':
