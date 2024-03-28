@@ -59,7 +59,7 @@ def main():
 
             # Display data frames
             
-            df1.dataframe(new_df1)
+            df1.dataframe(new_df1, hide_index=True)
 
             # Sleep for 1 second before making the next API call
             time.sleep(.1)
