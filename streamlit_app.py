@@ -5,12 +5,6 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
-def format_percentage(value):
-    if value >= 0:
-        return '+{:.2%}'.format(value)
-    else:
-        return '{:.2%}'.format(value)
-
 def fetch_data():
     master_list = []
     url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey=DT909L2IQJNAOmTWBgpPsNHo6m8AWuD4"
@@ -42,7 +36,8 @@ def fetch_data():
     df_sorted = df[df['Price'] > 1].sort_values(by="% Change", ascending=False).head(100)
     df_sorted['Price'] = df_sorted['Price'].round(2)
     df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
-    #df_sorted["% Change"] = df_sorted["% Change"].apply(format_percentage)
+    df_sorted["% Change"] = df_sorted["% Change"].round(2)
+    df_sorted["% Change"] = df_sorted["% Change"].apply(lambda x: '{:+}%'.format(x) if x >= 0 else '{:-}%'.format(x))
 
     return df_sorted
 
