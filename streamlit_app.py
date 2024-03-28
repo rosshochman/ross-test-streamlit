@@ -38,10 +38,11 @@ def fetch_data():
         master_list.append(new_list)
     columns = ["Ticker","Price","VWAP","% Change","Volume","$ Volume","Time"]
     df = pd.DataFrame(master_list, columns=columns)
+    df=df[df["$ Volume"] > 5000]
     df_sorted = df[df['Price'] > 1].sort_values(by="% Change", ascending=False).head(100)
     df_sorted['Price'] = df_sorted['Price'].round(2)
     df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
-    df_sorted["% Change"] = df_sorted["% Change"].apply(format_percentage)
+    #df_sorted["% Change"] = df_sorted["% Change"].apply(format_percentage)
 
     return df_sorted
 
@@ -62,7 +63,7 @@ def main():
             df1.dataframe(new_df1, hide_index=True)
 
             # Sleep for 1 second before making the next API call
-            #time.sleep(.1)
+            time.sleep(.1)
 
         except Exception as e:
             continue
