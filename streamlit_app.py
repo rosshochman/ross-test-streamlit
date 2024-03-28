@@ -62,7 +62,7 @@ def main():
             df1.dataframe(new_df1, hide_index=True)
 
             # Sleep for 1 second before making the next API call
-            time.sleep(.1)
+            #time.sleep(.1)
 
         except Exception as e:
             continue
