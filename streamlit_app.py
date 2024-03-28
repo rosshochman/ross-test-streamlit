@@ -7,7 +7,8 @@ def generate_dataframes():
     for i in range(1, 6):  # 15 columns
         df = pd.DataFrame({
             'Column 1': [f'Data {i}-1', f'Data {i}-2', f'Data {i}-3'],
-            'Column 2': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C']
+            'Column 2': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C'],
+            'Column 3': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C']
         })
         dataframes[f'DataFrame {i}'] = df
     return dataframes
