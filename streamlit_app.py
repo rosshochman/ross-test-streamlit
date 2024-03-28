@@ -37,8 +37,9 @@ def fetch_data():
     return df_sorted
 
 def main():
-    df1 = st.empty()
     st.header('Stocks')
+    df1 = st.empty()
+    
     
 
     # Infinite loop to continuously update data
