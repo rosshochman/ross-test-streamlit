@@ -40,22 +40,22 @@ def main():
     df1 = st.empty()
 
 # Infinite loop to continuously update data
-    while True:
-        try:
-            # Fetch data from Polygon.io API
-            new_df1 = fetch_data()
 
-            # Display data frames
-            st.header('Stocks')
-            st.dataframe(new_df1)
+    try:
+        # Fetch data from Polygon.io API
+        new_df1 = fetch_data()
 
-            df1 = new_df1
+        # Display data frames
+        st.header('Stocks')
+        st.dataframe(new_df1)
 
-            # Sleep for 1 second before making the next API call
-            time.sleep(10)
+        df1 = new_df1
 
-        except Exception as e:
-            pass
+        # Sleep for 1 second before making the next API call
+        time.sleep(10)
+
+    except Exception as e:
+        pass
 
 # Run the Streamlit app
 if __name__ == '__main__':
