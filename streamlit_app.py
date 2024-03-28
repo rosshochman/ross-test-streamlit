@@ -4,7 +4,7 @@ import pandas as pd
 # Define function to generate sample DataFrames
 def generate_dataframes():
     dataframes = {}
-    for i in range(1, 16):  # 15 columns
+    for i in range(1, 6):  # 15 columns
         df = pd.DataFrame({
             'Column 1': [f'Data {i}-1', f'Data {i}-2', f'Data {i}-3'],
             'Column 2': [f'Data {i}-A', f'Data {i}-B', f'Data {i}-C']
@@ -24,9 +24,9 @@ def main():
     max_width = max(df.shape[1] * 100 for df in dataframes.values())
 
     # Display DataFrames in columns
-    columns = st.columns(15)  # 15 columns
+    columns = st.columns(5)  # 15 columns
     for i, (name, df) in enumerate(dataframes.items()):
-        with columns[i % 15]:
+        with columns[i % 5]:
             st.header(name)
             st.dataframe(df, width=max_width)
 
