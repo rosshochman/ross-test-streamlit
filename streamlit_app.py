@@ -37,7 +37,7 @@ def fetch_data():
     df_sorted['Price'] = df_sorted['Price'].round(2)
     df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
     df_sorted["% Change"] = df_sorted["% Change"].round(2)
-    df_sorted["% Change"] = df_sorted["% Change"].apply(lambda x: '{:+}%'.format(x) if x >= 0 else '{:-}%'.format(x))
+    #df_sorted["% Change"] = df_sorted["% Change"].apply(lambda x: '{:+}%'.format(x) if x >= 0 else '{:-}%'.format(x))
 
     return df_sorted
 
