@@ -55,7 +55,7 @@ def main():
 
 
             # Sleep for 1 second before making the next API call
-            time.sleep(1)
+            time.sleep(60)
 
         except Exception as e:
             continue
