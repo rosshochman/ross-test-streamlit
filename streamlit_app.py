@@ -5,7 +5,7 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 
-@st.cache(ttl=.1)  # Cache data for 10 seconds
+@st.cache(ttl=.1)  # Cache data for .1 seconds
 def fetch_data():
     master_list = []
     url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey=DT909L2IQJNAOmTWBgpPsNHo6m8AWuD4"
@@ -28,9 +28,10 @@ def fetch_data():
         dayPrice = daylastTrade["p"]
         dayPriceFloat = float(dayPrice)
         dollarValue = dayPriceFloat*dayVWfloat
-        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue]
+        epoch_time = int(time.time())
+        new_list = [ticker,dayPriceFloat,dayVWfloat,percentage_float,change_float,dayVint,dollarValue,epoch_time]
         master_list.append(new_list)
-    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume"]
+    columns = ["Ticker","Price","VWAP","% Change","$ Change","Volume","$ Volume","Time"]
     df = pd.DataFrame(master_list, columns=columns)
     df_sorted = df[df['Price'] > 1].sort_values(by="% Change", ascending=False).head(100)
     return df_sorted
