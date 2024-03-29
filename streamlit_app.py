@@ -4,7 +4,6 @@ import requests
 import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
-
 def fetch_data():
     url_naz = "http://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt"
     df_naz = pd.read_csv(url_naz, delimiter="|")
