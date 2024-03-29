@@ -4,7 +4,7 @@ import requests
 import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
-
+polygon_key = st.secrets["polygon_key"]
 
 
 def fetch_data():
@@ -12,7 +12,7 @@ def fetch_data():
     df_naz = pd.read_csv(url_naz, delimiter="|")
     nasdaq_symbol_list = df_naz['Symbol'].dropna().tolist()
     master_list = []
-    url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey=DT909L2IQJNAOmTWBgpPsNHo6m8AWuD4"
+    url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey="+polygon_key
     #add something to get lists of otc vs listed
     response = requests.get(url)
     data = response.json()
@@ -43,11 +43,11 @@ def fetch_data():
     df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
     df_sorted["% Change"] = df_sorted["% Change"].round(2)
     df_sorted["% Change"] = df_sorted["% Change"].apply(lambda x: '{:+}%'.format(x) if x >= 0 else '{:-}%'.format(x))
-    naz_df = df_sorted[df_sorted["Ticker"]].isin(nasdaq_symbol_list).head(100)
+    naz_df = df_sorted[df_sorted["Ticker"]].isin(nasdaq_symbol_list)
     otc_df = df_sorted[~df_sorted["Ticker"]].isin(nasdaq_symbol_list)
-    trip_otc_df = otc_df[otc_df['Price'] < 0.001].head(100)
-    sub_otc_df = otc_df[(otc_df['Price'] >= 0.001) & (otc_df['Price'] <= 0.01)].head(100)
-    penny_plus_df = otc_df[otc_df['Price'] > 0.01].head(100)
+    trip_otc_df = otc_df[otc_df['Price'] < 0.001]
+    sub_otc_df = otc_df[(otc_df['Price'] >= 0.001) & (otc_df['Price'] <= 0.01)]
+    penny_plus_df = otc_df[otc_df['Price'] > 0.01]
 
     return naz_df, trip_otc_df, sub_otc_df, penny_plus_df
 
