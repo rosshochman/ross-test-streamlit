@@ -43,11 +43,11 @@ def fetch_data():
     df_sorted['VWAP'] = df_sorted['VWAP'].round(2)
     df_sorted["% Change"] = df_sorted["% Change"].round(2)
     df_sorted["% Change"] = df_sorted["% Change"].apply(lambda x: '{:+}%'.format(x) if x >= 0 else '{:-}%'.format(x))
-    naz_df = df_sorted[df_sorted["Ticker"]].isin(nasdaq_symbol_list)
+    naz_df = df_sorted[df_sorted["Ticker"]].isin(nasdaq_symbol_list).head(100)
     otc_df = df_sorted[~df_sorted["Ticker"]].isin(nasdaq_symbol_list)
-    trip_otc_df = otc_df[otc_df['Price'] < 0.001]
-    sub_otc_df = otc_df[(otc_df['Price'] >= 0.001) & (otc_df['Price'] <= 0.01)]
-    penny_plus_df = otc_df[otc_df['Price'] > 0.01]
+    trip_otc_df = otc_df[otc_df['Price'] < 0.001].head(100)
+    sub_otc_df = otc_df[(otc_df['Price'] >= 0.001) & (otc_df['Price'] <= 0.01)].head(100)
+    penny_plus_df = otc_df[otc_df['Price'] > 0.01].head(100)
 
     return naz_df, trip_otc_df, sub_otc_df, penny_plus_df
 
