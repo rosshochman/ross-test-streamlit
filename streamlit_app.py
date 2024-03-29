@@ -5,10 +5,10 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 polygon_key = st.secrets["polygon_key"]
-url_naz = "http://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt"
-df_naz = pd.read_csv(url_naz, delimiter="|")
-nasdaq_symbol_list = df_naz['Symbol'].dropna().tolist()
-
+#url_naz = "http://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt"
+#df_naz = pd.read_csv(url_naz, delimiter="|")
+#nasdaq_symbol_list = df_naz['Symbol'].dropna().tolist()
+nasdaq_symbol_list = ["AVTX","TSLA"]
 def fetch_data():
 
     master_list = []
