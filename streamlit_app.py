@@ -5,12 +5,12 @@ import time
 st.set_page_config(layout="wide")
 st.title("Penny Stock Data Science")
 polygon_key = st.secrets["polygon_key"]
-
+url_naz = "http://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt"
+df_naz = pd.read_csv(url_naz, delimiter="|")
+nasdaq_symbol_list = df_naz['Symbol'].dropna().tolist()
 
 def fetch_data():
-    url_naz = "http://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt"
-    df_naz = pd.read_csv(url_naz, delimiter="|")
-    nasdaq_symbol_list = df_naz['Symbol'].dropna().tolist()
+
     master_list = []
     url = "https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?include_otc=true&apiKey="+polygon_key
     #add something to get lists of otc vs listed
